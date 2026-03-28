@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>(╯°□°）╯︵ ┻━┻</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/@owickstrom/the-monospace-web/src/reset.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@owickstrom/the-monospace-web/src/index.css" />
+  
+  <style>
+    :root {
+      background-color: #0f0f0f;
+      color: #f0f0f0;
+    }
+    a { color: #f0f0f0; }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap; 
+    }
+    .header-text {
+      flex: 1;
+      max-width: 50ch; 
+    }
+    .karp-avatar {
+      width: 190px; 
+      image-rendering: pixelated; 
+      display: block;
+    }
+
+    h2 { text-transform: uppercase; margin-top: 2.5rem; }
+    ul { list-style-type: square; } 
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <p>initializing boot sequence...</p>
+  </div>
+
+  <script>
+    async function bootWebsite() {
+      const appDiv = document.getElementById('app');
+      
+      try {
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        const html = `
+          <h1>${data.name.toUpperCase()}</h1>
+          
+          <div class="header-container">
+            <div class="header-text">
+              <p>${data.bio}</p>
+              <p>Contact me at <a href="mailto:${data.contact}">${data.contact}</a></p>
+              <p>
+                ${data.links.map(link => `<a href="${link.url}">${link.name}</a>`).join(' &nbsp; ')}
+              </p>
+            </div>
+            <div>
+              <img src="${data.image}" alt="bw pixel karp" class="karp-avatar">
+            </div>
+          </div>
+
+          <h2>Experience</h2>
+          ${data.experience.map(exp => `
+            <p>
+              <strong>${exp.company}</strong> — ${exp.title} <br>
+              <em>${exp.date}</em> <br>
+              ${exp.desc} <br>
+              ${exp.stack ? `Stack: ${exp.stack}` : ''}
+            </p>
+          `).join('')}
+
+          <h2>Projects</h2>
+          ${data.projects.map(p => `
+            <p>
+              <strong>${p.name}</strong> &nbsp; <a href="${p.url}">repo</a> <br>
+              ${p.desc} <br>
+              Stack: ${p.stack}
+            </p>
+          `).join('')}
+
+          <h2>Fun Things I'm Working On</h2>
+          <ul>
+            ${data.currently.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+
+          <h2>Goals For The Future</h2>
+          <ul>
+            ${data.goals.map(goal => `<li>${goal}</li>`).join('')}
+          </ul>
+
+          <br><br>
+          <hr>
+          <p style="opacity: 0.1;" ><small>site template: <a href="https://github.com/owickstrom/the-monospace-web">monospace-web</a></small></p>
+        `;
+
+        appDiv.innerHTML = html;
+
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@owickstrom/the-monospace-web/src/index.js';
+        document.body.appendChild(script);
+
+      } catch (error) {
+        console.error("Boot failure:", error);
+        appDiv.innerHTML = `<p>> FATAL ERROR: Failed to load data.json.</p>`;
+      }
+    }
+
+    bootWebsite();
+  </script>
+</body>
+</html>
