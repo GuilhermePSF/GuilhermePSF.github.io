@@ -1,6 +1,6 @@
 {
   "name": "guilherme ferreira",
-  "bio": "Software Engineering student at UMinho. Writing high-performance systems, building scalable architectures, and diving deep into low-level programming.",
+  "bio": "Software Engineering student at UMinho. Writing high-performance systems, building scalable architectures, and diving deep into low-level programming, while web-deving here and there.",
   "contact": "guilhermepsf23@gmail.com",
   "image": "bwPixelKarp.jpeg",
   "links": [
@@ -34,8 +34,8 @@
       "desc": "Co-directed a team to secure partnerships and execute events for an 800+ student community. Contributed to core OSS tools (CAOS, Pombo) and engineered the ENEI event platform. Mentored participants in debugging and web dev at BugsByte."
     },
     {
-      "title": "Champion & Co-Organizer",
-      "company": "CoderCamp",
+      "title": "Champion & CoderCamp Co-Organizer",
+      "company": "CoderDojo",
       "date": "Sept 2024 – Present",
       "desc": "Directing a community of 100+ mentors and orchestrated a technical summer camp for 30 participants, overseeing curriculum and operations."
     }
@@ -68,8 +68,8 @@
   ],
   "goals": [
     "contribute to hardcore open-source (aiming for the Linux kernel)",
-    "land a summer internship",
-    "master Zig, C & Elixir while exploring Rust/Go/C3",
+    "land another summer internship",
+    "\"master\" Zig, C & Elixir while exploring Rust/Go/C3",
     "fool around more with Haskell (see my <a href=\"https://github.com/GuilhermePSF/Immutable-Towers-LI1\">Immutable Towers</a> game)"
   ]
 }
