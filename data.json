@@ -1,13 +1,13 @@
 {
   "name": "guilherme ferreira",
-  "bio": "Software Engineering student at UMinho. Writing high-performance systems, building scalable architectures, and diving deep into low-level programming, while web-deving here and there.",
+  "bio": "Software Engineering student at UMinho. Writing high-performance systems, building scalable architectures, and diving deep into low-level programming. Passionate about backend engineering, concurrency, and competent logic.",
   "contact": "guilhermepsf23@gmail.com",
   "image": "bwPixelKarp.jpeg",
   "links": [
     { "name": "github", "url": "https://github.com/GuilhermePSF" },
     {
       "name": "linkedin",
-      "url": "https://linkedin.com/in/guilherme-ferreira-748679351"
+      "url": "https://linkedin.com/in/guilhermepsf"
     },
     {
       "name": "dotfiles (nixos)",
@@ -15,8 +15,8 @@
     }
   ],
   "currently": [
-    "reading the Tiger Book (Modern Compiler Implementation) and using Zig to implement the Tiger language",
-    "networking and learning from experienced engineers in the systems industry",
+    "reading the Tiger Book (Modern Compiler Implementation) and using Rust to implement the Tiger language",
+    "networking and learning from experienced backend and systems engineers",
     "daily-driving and tweaking NixOS, with the goal of contributing back to the community"
   ],
   "experience": [
@@ -24,28 +24,35 @@
       "title": "Frontend Web Developer (Intern)",
       "company": "Yari Labs",
       "date": "Jun 2025 – Jul 2025",
-      "desc": "Developed a scalable frontend architecture for a real-world dashboard in an Agile team of 5.",
-      "stack": "Vue.js, TypeScript"
+      "desc": "Architected an embeddable, high-density vendor dashboard for Shopify. Designed a lightweight data-sync layer using diff-based polling against backend microservices to minimize network payloads and ensure near-real-time data delivery.",
+      "stack": "Vue.js, TypeScript, Pinia"
     },
     {
-      "title": "Co-Director (Social & Partnerships) & Tech Contributor",
+      "title": "Co-Director (Social) & Tech Contributor",
       "company": "CeSIUM",
       "date": "Feb 2025 – Present",
-      "desc": "Co-directed a team to secure partnerships and execute events for an 800+ student community. Contributed to core OSS tools (CAOS, Pombo) and engineered the ENEI event platform. Mentored participants in debugging and web dev at BugsByte."
+      "desc": "Co-directed operations for an 800+ student community. Core open-source contributor to CAOS and Pombo. Engineered the official ENEI platform for 550+ attendees, handling complex business logic and live interactions.",
+      "stack": "Elixir, Phoenix LiveView"
     },
     {
       "title": "Champion & CoderCamp Co-Organizer",
-      "company": "CoderDojo",
+      "company": "CoderDojo Braga",
       "date": "Sept 2024 – Present",
-      "desc": "Directing a community of 100+ mentors and orchestrated a technical summer camp for 30 participants, overseeing curriculum and operations."
+      "desc": "Directing an association of 100+ mentors. Designed and executed a week-long technical summer camp for 30 participants, handling curriculum development, operations, and resource allocation."
     }
   ],
   "projects": [
     {
       "name": "FlyData",
       "url": "https://github.com/GuilhermePSF/LI3-FlyData",
-      "desc": "High-performance in-memory database engine. Optimized parsing via SIMD, concurrency, branchless programming, and memory mapping. Achieved 20/20.",
+      "desc": "High-performance in-memory database engine. Maximized throughput via SIMD, concurrency, branchless programming, and memory mapping. Built a cache-friendly architecture. Achieved 20/20.",
       "stack": "C"
+    },
+    {
+      "name": "Pearl",
+      "url": "https://github.com/cesium/pearl",
+      "desc": "Official ENEI event platform for 550+ attendees. Developed device-agnostic, adaptive interfaces focusing on high reliability under live-event conditions.",
+      "stack": "Elixir, Phoenix LiveView"
     },
     {
       "name": "LiveVue Core & Tooling",
@@ -54,22 +61,16 @@
       "stack": "Elixir, TypeScript, Vue.js"
     },
     {
-      "name": "Pearl",
-      "url": "https://github.com/cesium/pearl",
-      "desc": "Official ENEI event platform for 600+ attendees. Developed device-agnostic, adaptive interfaces focusing on high reliability and micro-interactions.",
-      "stack": "Elixir, Phoenix LiveView"
-    },
-    {
       "name": "CeSIUM OSS Ecosystem",
       "url": "https://github.com/cesium",
       "desc": "Maintained and contributed to open-source tools for UMinho students, including Pombo (Atlas & Astra) and the CAOS infrastructure.",
-      "stack": "Next.js, TypeScript, Elixir, Phoenix LiveView"
+      "stack": "Next.js, TypeScript, Elixir"
     }
   ],
   "goals": [
-    "contribute to hardcore open-source (aiming for the Linux kernel)",
-    "land another summer internship",
-    "\"master\" Zig, C & Elixir while exploring Rust/Go/C3",
-    "fool around more with Haskell (see my <a href=\"https://github.com/GuilhermePSF/Immutable-Towers-LI1\">Immutable Towers</a> game)"
+    "contribute to hardcore open-source (aiming for the Linux kernel or major backend tooling)",
+    "land a systems or backend engineering summer internship",
+    "master C & Elixir while diving deep into Rust and Go for performant backend logic",
+    "build high-throughput distributed systems and explore custom networking protocols"
   ]
 }
