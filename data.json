@@ -1,8 +1,8 @@
 {
   "name": "guilherme ferreira",
-  "bio": "Software Engineering student at UMinho. Writing high-performance systems, building scalable architectures, and diving deep into low-level programming. Passionate about backend engineering, concurrency, and competent logic.",
+  "bio": "Software Engineering student at UMinho. Building high-performance systems and scalable architectures. Passionate about backend engineering, concurrency, and low-level programming, looking for a summer internship in the field",
   "contact": "guilhermepsf23@gmail.com",
-  "image": "bwPixelKarp.jpeg",
+  "image": "bwPixelKarp.webp",
   "links": [
     { "name": "github", "url": "https://github.com/GuilhermePSF" },
     {
@@ -15,8 +15,8 @@
     }
   ],
   "currently": [
-    "reading the Tiger Book (Modern Compiler Implementation) and using Rust to implement the Tiger language",
-    "networking and learning from experienced backend and systems engineers",
+    "reading the Tiger Book (Modern Compiler Implementation) implementing the Tiger language",
+    "networking and interested in learning from experienced backend and systems engineers",
     "daily-driving and tweaking NixOS, with the goal of contributing back to the community"
   ],
   "experience": [
@@ -68,9 +68,11 @@
     }
   ],
   "goals": [
-    "contribute to hardcore open-source (aiming for the Linux kernel or major backend tooling)",
     "land a systems or backend engineering summer internship",
-    "master C & Elixir while diving deep into Rust and Go for performant backend logic",
-    "build high-throughput distributed systems and explore custom networking protocols"
+    "contribute to hardcore open-source (aiming for the Linux kernel or major backend tooling)",
+    "Code even more with C & Elixir while diving deep into Rust and Go for performant backend logic",
+    "build high-throughput distributed systems, explore custom networking protocols and maybe some cryptography",
+    "Finally master Vim motions ;)",
+    "Program more in functional languages and aprreciate the beauty"
   ]
 }
