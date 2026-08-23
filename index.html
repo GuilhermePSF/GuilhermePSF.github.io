@@ -5,140 +5,405 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>(╯°□°)╯︵ ┻━┻</title>
     <link rel="icon" type="image/webp" href="bwPixelKarp.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"
       rel="stylesheet"
-      href="https://unpkg.com/@owickstrom/the-monospace-web/src/reset.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@owickstrom/the-monospace-web/src/index.css"
-    />
-    <style>
-      :root {
-        background-color: #0f0f0f;
-        color: #f0f0f0;
-      }
-      a {
-        color: #f0f0f0;
-      }
-      .header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 2rem;
-        flex-wrap: wrap;
-      }
-      .header-text {
-        flex: 1;
-        max-width: 50ch;
-      }
-      .karp-avatar {
-        width: 200px;
-        image-rendering: pixelated;
-        display: block;
-        @media (max-width: 760px) {
-         display: none;
-        }
-      }
-      h2 {
-        text-transform: uppercase;
-        margin-top: 2.5rem;
-      }
-      ul {
-        list-style-type: square;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div id="app">
-      <p>initializing boot sequence...</p>
-    </div>
+  <body class="bg-[#0f0f0f] text-[#f0f0f0] font-mono min-h-screen">
+    <main id="app" class="w-full max-w-[880px] mx-auto px-4 py-8 sm:px-6 md:py-12">
+      <p class="text-neutral-300">initializing boot sequence...</p>
+    </main>
     <script>
+      let siteData = null;
+      let activeTab = 'overview';
+      let activeProjectCategory = 'all';
+
       function Header(data) {
         return `
-          <h1 style="display:flex; justify-content:space-between; align-items:center; gap:2rem; margin: 2rem 0 1.2rem 0; font-weight:900; font-size:2rem;">
-            <span>${data.name.toUpperCase()}</span>
-            <span style="font-variant:small-caps; font-size:1rem; font-weight:inherit; letter-spacing:0.02em;">BRAGA, PT</span>
-          </h1>
+          <header class="mb-5 sm:mb-6">
+            <div class="flex justify-between items-baseline gap-2 mt-1 mb-2">
+              <h1 class="font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-white">${data.name}</h1>
+              <span class="text-xs sm:text-sm font-semibold tracking-wider uppercase text-neutral-300 [font-variant:small-caps] whitespace-nowrap">${data.location || 'BRAGA, PT'}</span>
+            </div>
+          </header>
         `;
       }
 
       function Hero(data) {
         return `
-          <div class="header-container">
-            <div class="header-text">
-              <p>${data.bio}</p>
-              <p>Contact me at <a href="mailto:${data.contact}">${data.contact}</a></p>
-              <p>
-                ${data.links.map((link) => `<a href="${link.url}">${link.name}</a>`).join(' &nbsp; ')}
-                &nbsp; <a href="#" onclick="showCV();return false;" style="text-decoration:underline; color:inherit; font-family:inherit; font-size:inherit; background:none; border:none; padding:0; cursor:pointer;"><strong>view cv</strong></a>
+          <div class="flex justify-between items-stretch gap-6 mb-6 sm:mb-8">
+            <div class="flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
+              <p class="leading-[1.5] text-neutral-100 text-sm sm:text-base">${data.bio}</p>
+              <p class="leading-[1.5] flex items-center gap-2 flex-wrap text-xs sm:text-sm">
+                <span class="text-neutral-400 font-medium">Contact:</span>
+                <a href="mailto:${data.contact}" class="text-neutral-100 hover:text-white underline underline-offset-2 break-all">${data.contact}</a>
+                <button onclick="copyContact('${data.contact}')" id="copy-btn" class="text-xs text-neutral-200 hover:text-white border border-neutral-700 hover:border-neutral-400 px-2 py-0.5 transition-colors bg-neutral-900 shrink-0">[copy]</button>
               </p>
+              <div class="hero-links-container">
+                ${data.links
+                  .map(
+                    (link) => `
+                  <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="hero-btn">
+                    <span>${link.name}</span>
+                    <span class="text-neutral-400 text-xs">↗</span>
+                  </a>
+                `,
+                  )
+                  .join('')}
+                <a href="#" onclick="showCV();return false;" class="hero-btn !font-bold">
+                  <span>view cv</span>
+                  <span class="text-neutral-400 text-xs">↗</span>
+                </a>
+              </div>
             </div>
-            <div>
-              <img src="${data.image}" alt="I <3 Magikarp" class="karp-avatar">
+            <div class="hidden md:flex shrink-0 items-center justify-center">
+              <img src="${data.image}" width="178" height="178" alt="I <3 Magikarp" style="width: 178px; height: 178px; max-width: 178px; max-height: 178px;" class="w-[178px] h-[178px] object-contain [image-rendering:pixelated] block">
             </div>
           </div>
         `;
       }
 
-      function Experience(data) {
+      function Navigation(data) {
+        const tabs = [
+          { id: 'overview', desktop: '1. overview', mobile: '1. overview' },
+          { id: 'experience', desktop: '2. experience', mobile: '2. exp' },
+          { id: 'projects', desktop: '3. projects', mobile: '3. proj' },
+          { id: 'education', desktop: '4. education', mobile: null },
+          { id: 'skills', desktop: '5. skills', mobile: '4. skills' },
+        ];
+
         return `
-          <h2>Experience</h2>
-          ${data.experience
-            .map(
-              (exp) => `
-            <p>
-              <strong>${exp.company}</strong> — ${exp.title} <br>
-              <em>${exp.date}</em> <br>
-              ${exp.desc} <br>
-              ${exp.stack ? `Stack: ${exp.stack}` : ''}
-            </p>
-          `,
-            )
-            .join('')}
+          <nav class="nav-tabs-container">
+            ${tabs
+              .map(
+                (tab) => `
+              <button 
+                onclick="setTab('${tab.id}')" 
+                class="nav-tab-btn ${tab.mobile ? '' : 'desktop-only-tab'} ${activeTab === tab.id ? 'active' : ''}">
+                [${tab.mobile ? `<span class="sm:hidden">${tab.mobile}</span><span class="hidden sm:inline">${tab.desktop}</span>` : tab.desktop}]
+              </button>
+            `,
+              )
+              .join('')}
+          </nav>
         `;
       }
 
-      function Projects(data) {
+      function OverviewTab(data) {
+        const featuredExperience = (data.experience || []).filter((exp) => exp.featured);
+        const featuredProjects = (data.projects || []).filter((p) => p.featured);
+        const edu = (data.education || [])[0];
+        const coreSkills = (data.skills && data.skills.core)
+          ? data.skills.core
+          : [...(data.skills?.languages || []), ...(data.skills?.systems || [])];
+
         return `
-          <h2>Projects</h2>
-          ${data.projects
-            .map(
-              (p) => `
-            <p>
-              <strong>${p.name}</strong> &nbsp; <a href="${p.url}">repo</a> <br>
-              ${p.desc} <br>
-              Stack: ${p.stack}
-            </p>
-          `,
-            )
-            .join('')}
+          <div class="space-y-8">
+            ${
+              featuredExperience.length > 0
+                ? `
+              <section>
+                <div class="flex justify-between items-baseline mb-4">
+                  <h2 class="uppercase font-bold text-base tracking-wider text-white">Experience</h2>
+                  <button onclick="setTab('experience')" class="text-xs text-neutral-300 hover:text-white underline underline-offset-2">
+                    view full history →
+                  </button>
+                </div>
+                <div class="space-y-4">
+                  ${featuredExperience.map((exp) => ExperienceItem(exp)).join('')}
+                </div>
+              </section>
+            `
+                : ''
+            }
+
+            ${
+              featuredProjects.length > 0
+                ? `
+              <section>
+                <div class="flex justify-between items-baseline mb-4">
+                  <h2 class="uppercase font-bold text-base tracking-wider text-white">Featured Projects</h2>
+                  <button onclick="setTab('projects')" class="text-xs text-neutral-300 hover:text-white underline underline-offset-2">
+                    view all ${data.projects.length} projects →
+                  </button>
+                </div>
+                <div class="space-y-4">
+                  ${featuredProjects.map((p) => ProjectCard(p)).join('')}
+                </div>
+              </section>
+            `
+                : ''
+            }
+
+            ${
+              coreSkills.length > 0
+                ? `
+              <section>
+                <div class="flex justify-between items-baseline mb-4">
+                  <h2 class="uppercase font-bold text-base tracking-wider text-white">Core Competencies</h2>
+                  <button onclick="setTab('skills')" class="text-xs text-neutral-300 hover:text-white underline underline-offset-2">
+                    view all skills →
+                  </button>
+                </div>
+                <div class="border border-neutral-800 p-3.5 sm:p-5 bg-neutral-950/60 w-full">
+                  <div class="flex flex-wrap gap-2 text-xs">
+                    ${coreSkills
+                      .map((s) => `<span class="bg-neutral-900 border border-neutral-700 px-2.5 py-1 text-neutral-200 font-mono font-medium">${s}</span>`)
+                      .join('')}
+                  </div>
+                </div>
+              </section>
+            `
+                : ''
+            }
+
+            ${
+              edu
+                ? `
+              <section>
+                <div class="flex justify-between items-baseline mb-4">
+                  <h2 class="uppercase font-bold text-base tracking-wider text-white">Education</h2>
+                  <button onclick="setTab('education')" class="hidden sm:inline text-xs text-neutral-300 hover:text-white underline underline-offset-2">
+                    details →
+                  </button>
+                </div>
+                <div class="border border-neutral-800 hover:border-neutral-600 p-3.5 sm:p-5 transition-colors bg-neutral-950/60 w-full space-y-2">
+                  <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-2">
+                    <strong class="font-bold text-sm sm:text-base text-white">${edu.degree}</strong>
+                    <span class="text-neutral-400 italic text-xs sm:text-sm whitespace-nowrap">${edu.date}</span>
+                  </div>
+                  <div class="text-neutral-200 text-xs sm:text-sm">${edu.institution} — ${edu.location}</div>
+                  <div class="text-xs sm:text-sm text-neutral-300">
+                    <span class="text-neutral-400">Grade / Média:</span> <strong class="text-white font-bold">${edu.gpa}</strong>
+                  </div>
+                </div>
+              </section>
+            `
+                : ''
+            }
+          </div>
         `;
       }
 
-      function Currently(data) {
+      function ProjectCard(p) {
+        const stackList = Array.isArray(p.stack)
+          ? p.stack
+          : (p.stack || '').split(',').map((s) => s.trim());
+
         return `
-          <h2>Fun Things I'm Working On</h2>
-          <ul>
-            ${data.currently.map((item) => `<li>${item}</li>`).join('')}
-          </ul>
+          <div class="border border-neutral-800 hover:border-neutral-600 p-3.5 sm:p-5 transition-colors bg-neutral-950/60 w-full">
+            <div class="flex items-start justify-between gap-3 sm:gap-4 mb-2">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <strong class="font-bold text-sm sm:text-base text-white">${p.name}</strong>
+                  ${
+                    p.highlight
+                      ? `<span class="text-[10px] sm:text-[11px] font-semibold text-neutral-200 bg-neutral-900 border border-neutral-700 px-1.5 py-0.5">${p.highlight}</span>`
+                      : ''
+                  }
+                </div>
+                ${p.tagline ? `<div class="text-xs text-neutral-300">${p.tagline}</div>` : ''}
+              </div>
+              <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-neutral-200 underline underline-offset-2 hover:text-white whitespace-nowrap shrink-0 pt-0.5">repo ↗</a>
+            </div>
+            <p class="text-xs sm:text-sm leading-[1.5] text-neutral-200 my-2.5 sm:my-3">${p.desc}</p>
+            <div class="flex flex-wrap gap-1.5 text-xs text-neutral-300">
+              ${stackList
+                .map(
+                  (s) =>
+                    `<span class="bg-neutral-900 border border-neutral-800 px-2 py-0.5 text-neutral-200 font-medium">${s}</span>`,
+                )
+                .join('')}
+            </div>
+          </div>
         `;
       }
 
-      function Goals(data) {
+      function ProjectsTab(data) {
+        const allProjects = data.projects || [];
+        const categories = [
+          { id: 'all', label: `All (${allProjects.length})` },
+          { id: 'systems', label: 'Systems & Low-Level' },
+          { id: 'distributed', label: 'Distributed & Backend' },
+          { id: 'tooling', label: 'Tooling & OSS' },
+        ];
+
+        const filtered =
+          activeProjectCategory === 'all'
+            ? allProjects
+            : allProjects.filter((p) => p.category === activeProjectCategory);
+
         return `
-          <h2>Goals For The Future</h2>
-          <ul>
-            ${data.goals.map((goal) => `<li>${goal}</li>`).join('')}
-          </ul>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-6 text-xs">
+              ${categories
+                .map(
+                  (c) => `
+                <button 
+                  onclick="setProjectCategory('${c.id}')"
+                  class="px-2.5 py-1 whitespace-nowrap border transition-colors ${
+                    activeProjectCategory === c.id
+                      ? 'bg-neutral-800 border-neutral-500 text-white font-bold'
+                      : 'border-neutral-800 bg-neutral-950 text-neutral-300 hover:border-neutral-600 hover:text-white'
+                  }">
+                  ${c.label}
+                </button>
+              `,
+                )
+                .join('')}
+            </div>
+            <div class="space-y-4">
+              ${
+                filtered.length > 0
+                  ? filtered.map((p) => ProjectCard(p)).join('')
+                  : `<p class="text-neutral-400 text-sm italic">No projects found in this category.</p>`
+              }
+            </div>
+          </div>
+        `;
+      }
+
+      function ExperienceItem(exp) {
+        const stackList = exp.stack
+          ? (Array.isArray(exp.stack) ? exp.stack : exp.stack.split(',').map((s) => s.trim()))
+          : [];
+
+        return `
+          <div class="border border-neutral-800 hover:border-neutral-600 p-3.5 sm:p-5 transition-colors bg-neutral-950/60 w-full">
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
+              <div class="flex items-center gap-2 flex-wrap">
+                <strong class="font-bold text-sm sm:text-base text-white">${exp.company}</strong>
+                <span class="text-neutral-400 text-xs sm:text-sm">—</span>
+                <span class="text-neutral-200 text-xs sm:text-sm font-medium">${exp.title}</span>
+              </div>
+              <em class="italic text-neutral-400 text-xs sm:text-sm whitespace-nowrap shrink-0">${exp.date}</em>
+            </div>
+            <p class="text-xs sm:text-sm leading-[1.5] text-neutral-200 my-2.5 sm:my-3">${exp.desc}</p>
+            ${
+              stackList.length > 0
+                ? `
+              <div class="flex flex-wrap gap-1.5 text-xs text-neutral-300">
+                ${stackList
+                  .map(
+                    (s) =>
+                      `<span class="bg-neutral-900 border border-neutral-800 px-2 py-0.5 text-neutral-200 font-medium">${s}</span>`,
+                  )
+                  .join('')}
+              </div>
+            `
+                : ''
+            }
+          </div>
+        `;
+      }
+
+      function ExperienceTab(data) {
+        return `
+          <section class="space-y-6">
+            <h2 class="uppercase font-bold text-base mb-4 tracking-wider text-white">Experience & Leadership</h2>
+            <div class="space-y-4">
+              ${(data.experience || []).map((exp) => ExperienceItem(exp)).join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      function EducationTab(data) {
+        const eduList = data.education || [];
+
+        return `
+          <section class="space-y-6">
+            <h2 class="uppercase font-bold text-base mb-4 tracking-wider text-white">Education</h2>
+            <div class="space-y-4">
+              ${eduList
+                .map(
+                  (edu) => `
+                <div class="border border-neutral-800 hover:border-neutral-600 p-3.5 sm:p-5 transition-colors bg-neutral-950/60 w-full space-y-2.5">
+                  <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-2">
+                    <strong class="font-bold text-sm sm:text-base text-white">${edu.degree}</strong>
+                    <span class="italic text-neutral-400 text-sm whitespace-nowrap">${edu.date}</span>
+                  </div>
+                  <div class="text-xs sm:text-sm text-neutral-200">${edu.institution} — ${edu.location}</div>
+                  <div class="text-xs sm:text-sm text-neutral-200">
+                    <span class="text-neutral-400">Grade / Média:</span> <strong class="text-white font-bold">${edu.gpa}</strong>
+                  </div>
+                  ${edu.desc ? `<p class="text-xs sm:text-sm text-neutral-300 pt-2.5 border-t border-neutral-800/80 leading-[1.5]">${edu.desc}</p>` : ''}
+                </div>
+              `,
+                )
+                .join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      function SkillsTab(data) {
+        return `
+          <div class="space-y-8">
+            ${
+              data.skills
+                ? `
+              <section>
+                <h2 class="uppercase font-bold text-base mb-4 tracking-wider text-white">Technical Stack</h2>
+                <div class="border border-neutral-800 p-3.5 sm:p-5 bg-neutral-950/60 w-full space-y-5 text-sm">
+                  <div>
+                    <span class="text-neutral-300 text-xs font-bold uppercase tracking-wider block mb-2">Languages:</span>
+                    <div class="flex flex-wrap gap-2">
+                      ${(data.skills.languages || []).map((s) => `<span class="bg-neutral-900 border border-neutral-700 px-2.5 py-1 text-xs sm:text-sm text-neutral-200 font-medium">${s}</span>`).join('')}
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-neutral-300 text-xs font-bold uppercase tracking-wider block mb-2">Systems & Tooling:</span>
+                    <div class="flex flex-wrap gap-2">
+                      ${(data.skills.systems || []).map((s) => `<span class="bg-neutral-900 border border-neutral-700 px-2.5 py-1 text-xs sm:text-sm text-neutral-200 font-medium">${s}</span>`).join('')}
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-neutral-300 text-xs font-bold uppercase tracking-wider block mb-2">Frameworks & Backend:</span>
+                    <div class="flex flex-wrap gap-2">
+                      ${(data.skills.frameworks || []).map((s) => `<span class="bg-neutral-900 border border-neutral-700 px-2.5 py-1 text-xs sm:text-sm text-neutral-200 font-medium">${s}</span>`).join('')}
+                    </div>
+                  </div>
+                </div>
+              </section>
+            `
+                : ''
+            }
+
+            <section>
+              <h2 class="uppercase font-bold text-base mb-4 tracking-wider text-white">Fun Things I'm Working On</h2>
+              <div class="border border-neutral-800 p-3.5 sm:p-5 bg-neutral-950/60 w-full">
+                <ul class="list-[square] list-inside space-y-2 leading-[1.5] text-xs sm:text-sm text-neutral-200">
+                  ${(data.currently || []).map((item) => `<li>${item}</li>`).join('')}
+                </ul>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="uppercase font-bold text-base mb-4 tracking-wider text-white">Goals For The Future</h2>
+              <div class="border border-neutral-800 p-3.5 sm:p-5 bg-neutral-950/60 w-full">
+                <ul class="list-[square] list-inside space-y-2 leading-[1.5] text-xs sm:text-sm text-neutral-200">
+                  ${(data.goals || []).map((goal) => `<li>${goal}</li>`).join('')}
+                </ul>
+              </div>
+            </section>
+          </div>
         `;
       }
 
       function Footer() {
         return `
-          <br><br>
-          <hr>
-          <p style="opacity: 0.1;" ><small>site template: <a href="https://github.com/owickstrom/the-monospace-web">monospace-web</a></small></p>
+          <footer class="pt-8 pb-12">
+            <hr class="border-t border-neutral-800 my-6">
+            <div class="flex justify-between items-center text-xs text-neutral-400">
+              <span>(╯°□°)╯︵ ┻━┻</span>
+              <span class="hidden sm:inline font-mono">keys: [1-5] tabs • [v] cv</span>
+            </div>
+          </footer>
         `;
       }
 
@@ -146,28 +411,79 @@
         window.open('cv.pdf', '_blank');
       }
 
+      function copyContact(email) {
+        navigator.clipboard.writeText(email).then(() => {
+          const btn = document.getElementById('copy-btn');
+          if (btn) {
+            btn.innerText = '[copied!]';
+            setTimeout(() => {
+              btn.innerText = '[copy]';
+            }, 2000);
+          }
+        });
+      }
+
+      function setTab(tabId) {
+        activeTab = tabId;
+        renderApp();
+      }
+
+      function setProjectCategory(catId) {
+        activeProjectCategory = catId;
+        renderApp();
+      }
+
+      function renderApp() {
+        if (!siteData) return;
+        const appDiv = document.getElementById('app');
+
+        let tabContent = '';
+        if (activeTab === 'overview') {
+          tabContent = OverviewTab(siteData);
+        } else if (activeTab === 'experience') {
+          tabContent = ExperienceTab(siteData);
+        } else if (activeTab === 'projects') {
+          tabContent = ProjectsTab(siteData);
+        } else if (activeTab === 'education') {
+          tabContent = EducationTab(siteData);
+        } else if (activeTab === 'skills') {
+          tabContent = SkillsTab(siteData);
+        }
+
+        const html = `
+          ${Header(siteData)}
+          ${Hero(siteData)}
+          ${Navigation(siteData)}
+          ${tabContent}
+          ${Footer()}
+        `;
+
+        appDiv.innerHTML = html;
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return; // Never hijack Ctrl/Cmd copy combinations
+        if (e.key === '1') setTab('overview');
+        if (e.key === '2') setTab('experience');
+        if (e.key === '3') setTab('projects');
+        if (e.key === '4') setTab('education');
+        if (e.key === '5') setTab('skills');
+        if (e.key === 'v' || e.key === 'V') showCV();
+      });
+
       async function bootWebsite() {
         const appDiv = document.getElementById('app');
         try {
           const response = await fetch('data.json');
           if (!response.ok)
             throw new Error(`HTTP error! status: ${response.status}`);
-          const data = await response.json();
-
-          const html = `
-            ${Header(data)}
-            ${Hero(data)}
-            ${Experience(data)}
-            ${Projects(data)}
-            ${Currently(data)}
-            ${Goals(data)}
-            ${Footer()}
-          `;
-
-          appDiv.innerHTML = html;
+          siteData = await response.json();
+          renderApp();
         } catch (error) {
           console.error('Boot failure:', error);
-          appDiv.innerHTML = `<p>> FATAL ERROR: Failed to load data.json.</p>`;
+          appDiv.innerHTML = `<p class="text-red-400">> FATAL ERROR: Failed to load data.json.</p>`;
         }
       }
 

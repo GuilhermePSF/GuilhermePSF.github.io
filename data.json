@@ -1,6 +1,7 @@
 {
   "name": "guilherme ferreira",
-  "bio": "Software Engineering student at UMinho. Building high-performance systems and scalable architectures. Passionate about backend engineering, concurrency, and low-level programming, looking for a summer internship in the field",
+  "location": "BRAGA, PT",
+  "bio": "Software Engineering student at UMinho focusing on low-level systems, concurrency, and scalable backend architecture.",
   "contact": "guilhermepsf23@gmail.com",
   "image": "bwPixelKarp.webp",
   "links": [
@@ -14,65 +15,133 @@
       "url": "https://github.com/GuilhermePSF/.files"
     }
   ],
-  "currently": [
-    "reading the Tiger Book (Modern Compiler Implementation) implementing the Tiger language",
-    "networking and interested in learning from experienced backend and systems engineers",
-    "daily-driving and tweaking NixOS, with the goal of contributing back to the community"
+  "education": [
+    {
+      "degree": "Bachelor in Software Engineering",
+      "institution": "University of Minho",
+      "date": "2024 – Present (Expected 2027)",
+      "location": "Braga, Portugal",
+      "gpa": "15.6 / 20",
+      "desc": ""
+    }
   ],
+  "skills": {
+    "core": [
+      "C",
+      "Rust",
+      "Go",
+      "Elixir",
+      "TypeScript",
+      "Linux",
+      "NixOS",
+      "PostgreSQL"
+    ],
+    "languages": [
+      "C",
+      "Rust",
+      "Go",
+      "Elixir",
+      "TypeScript",
+      "Python",
+      "SQL",
+      "Java"
+    ],
+    "systems": ["Linux", "NixOS", "Docker", "Git", "SIMD", "mmap", "Profiling"],
+    "frameworks": ["Phoenix LiveView", "Node.js", "Vue.js", "PostgreSQL", "RAG"]
+  },
   "experience": [
     {
-      "title": "Frontend Web Developer (Intern)",
-      "company": "Yari Labs",
-      "date": "Jun 2025 – Jul 2025",
-      "desc": "Architected an embeddable, high-density vendor dashboard for Shopify. Designed a lightweight data-sync layer using diff-based polling against backend microservices to minimize network payloads and ensure near-real-time data delivery.",
-      "stack": "Vue.js, TypeScript, Pinia"
-    },
-    {
-      "title": "Co-Director (Social) & Tech Contributor",
-      "company": "CeSIUM",
-      "date": "Feb 2025 – Present",
-      "desc": "Co-directed operations for an 800+ student community. Core open-source contributor to CAOS and Pombo. Engineered the official ENEI platform for 550+ attendees, handling complex business logic and live interactions.",
-      "stack": "Elixir, Phoenix LiveView"
+      "title": "Technology Team & OSS Contributor",
+      "company": "CeSIUM & ENEI",
+      "date": "Oct 2025 – Present",
+      "featured": true,
+      "desc": "Engineered the official ENEI event platform supporting 500+ attendees, building backend workflows for workshop enrollment and ticketing. Core open-source contributor to the CAOS infrastructure and Pombo.",
+      "stack": "Elixir, Phoenix LiveView, PostgreSQL, Docker"
     },
     {
       "title": "Champion & CoderCamp Co-Organizer",
       "company": "CoderDojo Braga",
       "date": "Sept 2024 – Present",
+      "featured": true,
       "desc": "Directing an association of 100+ mentors. Designed and executed a week-long technical summer camp for 30 participants, handling curriculum development, operations, and resource allocation."
+    },
+    {
+      "title": "Co-Director (Social & Partnerships)",
+      "company": "CeSIUM",
+      "date": "Oct 2025 – Present",
+      "featured": false,
+      "desc": "Co-directing operations, partnerships, and social initiatives for an 800+ student software engineering community."
+    },
+    {
+      "title": "Frontend Web Developer (Intern)",
+      "company": "Yari Labs",
+      "date": "Jun 2025 – Jul 2025",
+      "featured": true,
+      "desc": "Architected an embeddable, high-density vendor dashboard for Shopify. Designed a lightweight data-sync layer using diff-based polling against backend microservices to minimize network payloads and ensure near-real-time data delivery.",
+      "stack": "Vue.js, TypeScript, Pinia"
     }
   ],
   "projects": [
     {
+      "name": "Cura",
+      "tagline": "AI-Assisted Clinical Workflow Tool",
+      "category": "distributed",
+      "featured": true,
+      "highlight": "Real-time Audio & RAG",
+      "url": "https://github.com/giganteslilguys/cura",
+      "desc": "AI-assisted clinical workflow tool. Streams real-time consultation audio using Whisper and ElevenLabs through a Phoenix LiveView and TypeScript pipeline, with Gemini 2.5 Flash and RAG for clinical summarization, automated form-filling, and contextual question suggestions.",
+      "stack": "Elixir, Phoenix LiveView, TypeScript, Gemini, Whisper, RAG"
+    },
+    {
       "name": "FlyData",
+      "tagline": "High-Performance In-Memory Database Engine",
+      "category": "systems",
+      "featured": true,
+      "highlight": "20/20 Grade • SIMD",
       "url": "https://github.com/GuilhermePSF/LI3-FlyData",
       "desc": "High-performance in-memory database engine. Maximized throughput via SIMD, concurrency, branchless programming, and memory mapping. Built a cache-friendly architecture. Achieved 20/20.",
-      "stack": "C"
+      "stack": "C, SIMD, Concurrency, mmap, Profiling"
     },
     {
       "name": "Pearl",
+      "tagline": "Official ENEI Event Platform",
+      "category": "distributed",
+      "featured": true,
+      "highlight": "550+ Attendees",
       "url": "https://github.com/cesium/pearl",
       "desc": "Official ENEI event platform for 550+ attendees. Developed device-agnostic, adaptive interfaces focusing on high reliability under live-event conditions.",
-      "stack": "Elixir, Phoenix LiveView"
+      "stack": "Elixir, Phoenix LiveView, PostgreSQL, Docker"
     },
     {
       "name": "LiveVue Core & Tooling",
+      "tagline": "Elixir LiveView + Vue Highlighting",
+      "category": "tooling",
+      "featured": false,
+      "highlight": "Developer Tooling",
       "url": "https://github.com/GuilhermePSF/live-vue-sigil-highlighting",
       "desc": "Contributed to the live_vue library and engineered a dedicated VS Code extension for sigil highlighting to improve developer experience.",
-      "stack": "Elixir, TypeScript, Vue.js"
+      "stack": "Elixir, TypeScript, Vue.js, VS Code"
     },
     {
       "name": "CeSIUM OSS Ecosystem",
+      "tagline": "Open-Source Campus Infrastructure",
+      "category": "tooling",
+      "featured": false,
+      "highlight": "800+ Students",
       "url": "https://github.com/cesium",
       "desc": "Maintained and contributed to open-source tools for UMinho students, including Pombo (Atlas & Astra) and the CAOS infrastructure.",
-      "stack": "Next.js, TypeScript, Elixir"
+      "stack": "Next.js, TypeScript, Elixir, Docker"
     }
   ],
+  "currently": [
+    "reading the Tiger Book (Modern Compiler Implementation) implementing the Tiger language",
+    "networking and interested in learning from experienced backend and systems engineers",
+    "daily-driving and tweaking NixOS, with the goal of contributing back to the community"
+  ],
   "goals": [
-    "land a systems or backend engineering summer internship",
-    "contribute to hardcore open-source (aiming for the Linux kernel or major backend tooling)",
-    "Code even more with C & Elixir while diving deep into Rust and Go for performant backend logic",
-    "build high-throughput distributed systems, explore custom networking protocols and maybe some cryptography",
+    "Contribute more to open-source",
+    "Explore custom networking protocols and maybe some cryptography",
     "Finally master Vim motions ;)",
-    "Program more in functional languages and aprreciate the beauty"
+    "Program more in functional languages and appreciate the beauty"
   ]
 }
