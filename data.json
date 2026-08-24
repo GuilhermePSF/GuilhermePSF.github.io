@@ -27,7 +27,7 @@
   ],
   "skills": {
     "core": [
-      "C",
+      "C/C++",
       "Rust",
       "Go",
       "Elixir",
@@ -37,7 +37,7 @@
       "PostgreSQL"
     ],
     "languages": [
-      "C",
+      "C/C++",
       "Rust",
       "Go",
       "Elixir",
@@ -134,8 +134,9 @@
     }
   ],
   "currently": [
-    "reading the Tiger Book (Modern Compiler Implementation) implementing the Tiger language",
-    "networking and interested in learning from experienced backend and systems engineers",
+    "self-learning modern OpenGL and computer graphics fundamentals (shaders, rendering pipelines, math, textures, etc.)",
+    "building an interpreter for the Monkey programming language in Go with a book by Thorsten Ball",
+    "implementing a toy Minecraft protocol in Rust over TCP, handling packet framing, VarInt serialization and learning the std::net",
     "daily-driving and tweaking NixOS, with the goal of contributing back to the community"
   ],
   "goals": [

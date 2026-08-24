@@ -12,12 +12,20 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="lenis.min.js"></script>
   </head>
   <body class="bg-[#0f0f0f] text-[#f0f0f0] font-mono min-h-screen">
     <main id="app" class="w-full max-w-[880px] mx-auto px-4 py-8 sm:px-6 md:py-12">
       <p class="text-neutral-300">initializing boot sequence...</p>
     </main>
     <script>
+      // Initialize Lenis Smooth Scroll
+      const lenis = new Lenis({
+        autoRaf: true,
+        smoothWheel: true,
+        duration: 1.1,
+      });
+
       let siteData = null;
       let activeTab = 'overview';
       let activeProjectCategory = 'all';
